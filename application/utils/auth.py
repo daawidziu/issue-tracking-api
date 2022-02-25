@@ -1,5 +1,5 @@
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-from flask import Flask, current_app
+from flask import current_app
 
 from application import jwt
 from application.models import Account
