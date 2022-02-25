@@ -1,3 +1,4 @@
+from flask_sqlalchemy import Pagination
 from sqlalchemy.orm import declared_attr
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
@@ -23,6 +24,10 @@ class BaseModel(db.Model):
     @classmethod
     def filter_by(cls, limit=100, **filters) -> list['BaseModel']:
         return cls.query.filter_by(**filters).limit(limit).all()
+
+    @classmethod
+    def paginate(cls, page: int, per_page: int = 25, **kwargs) -> Pagination:
+        return cls.query.filter_by(**kwargs).paginate(page, per_page)
 
     def update(self, new_data: dict) -> None:
         try:
