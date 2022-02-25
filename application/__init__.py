@@ -7,7 +7,6 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from redis import Redis
 
-import config
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -16,7 +15,7 @@ bc = Bcrypt()
 migrate = Migrate()
 
 
-def init_app(config_file: object | str = config.DevelopmentConfig) -> Flask:
+def init_app(config_file: object | str = 'config.ProductionConfig') -> Flask:
     app = Flask(__name__)
     app.config.from_object(config_file)
 
@@ -28,6 +27,10 @@ def init_app(config_file: object | str = config.DevelopmentConfig) -> Flask:
     jwt.init_app(app)
     bc.init_app(app)
     migrate.init_app(app, db)
+
+    @app.before_first_request
+    def a():
+        db.create_all()
 
     with app.app_context():
         from application.api import api_bp
