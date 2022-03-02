@@ -3,7 +3,7 @@ from flask_restx import Api
 
 from application.resources import auth_ns, projects_ns, issues_ns
 
-api_bp = Blueprint('api', __name__, url_prefix='/issue-tracker')
+api_bp = Blueprint('api', __name__, url_prefix='')
 authorizations = {
     'Bearer Auth': {
         'type': 'apiKey',
@@ -15,8 +15,8 @@ authorizations = {
 api = Api(
     app=api_bp,
     title='Issue Tracker',
-    version='0.1',
-    description='TODO',
+    version='1.0',
+    description='REST Api for issues tracking',
     security='Bearer Auth',
     authorizations=authorizations
 )
