@@ -16,14 +16,13 @@ class Config:
     SES_EMAIL_SOURCE = os.getenv("SES_EMAIL_SOURCE")
     ACCESS_EXPIRES = timedelta(minutes=float(os.getenv("ACCESS_EXPIRES", 1)))
     EMAIL_MAX_AGE = int(os.getenv("EMAIL_MAX_AGE", 1))
+    REDIS_URL = os.getenv("REDIS_URL", "redis://")
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
     SECRET_KEY = os.getenv("SECRET_KEY")
     SECURITY_PASSWORD_SALT = os.getenv("SECURITY_PASSWORD_SALT")
-    ACCESS_EXPIRES = timedelta(minutes=float(os.getenv("ACCESS_EXPIRES", 1)))
-    REDIS_URL = os.getenv("REDIS_URL", "redis://")
 
 
 class DevelopmentConfig(Config):
