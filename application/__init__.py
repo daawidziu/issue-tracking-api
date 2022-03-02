@@ -29,7 +29,7 @@ def init_app(config_file: object | str = 'config.ProductionConfig') -> Flask:
     migrate.init_app(app, db)
 
     @app.before_first_request
-    def a():
+    def db_create_all():
         db.create_all()
 
     with app.app_context():
