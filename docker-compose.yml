@@ -4,7 +4,6 @@ services:
 
   web:
     build: .
-    image: web
     container_name: web
     ports:
       - "5000:5000"
@@ -16,7 +15,7 @@ services:
       - db
 
   worker:
-    image: web
+    build: .
     command: python manage.py run_worker
     volumes:
       - .:/usr/src/app
