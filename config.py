@@ -17,6 +17,8 @@ class Config:
     ACCESS_EXPIRES = timedelta(minutes=float(os.getenv("ACCESS_EXPIRES", 1)))
     EMAIL_MAX_AGE = int(os.getenv("EMAIL_MAX_AGE", 1))
     REDIS_URL = os.getenv("REDIS_URL", "redis://")
+    JWT_TOKEN_LOCATION = ['cookies']
+    JWT_COOKIE_SECURE = True
 
 
 class ProductionConfig(Config):
