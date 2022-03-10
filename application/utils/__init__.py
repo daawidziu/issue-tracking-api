@@ -1,3 +1,3 @@
-from .auth import check_if_token_revoked, user_identity_lookup, user_lookup_callback, \
-    confirm_token, generate_confirmation_token
+from .auth import generate_confirmation_token, confirm_token
+from .handlers import register_handlers
 from .email import send_confirmation

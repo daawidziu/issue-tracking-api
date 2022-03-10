@@ -1,24 +1,14 @@
 from flask import render_template, current_app
-import boto3
+from flask_mail import Message
 
-
-ses = boto3.client(
-    "ses",
-    region_name=current_app.config["SES_REGION"],
-    aws_access_key_id=current_app.config["AWS_ACCESS_KEY_ID"],
-    aws_secret_access_key=current_app.config["AWS_SECRET_ACCESS_KEY"]
-)
+from application import mail
 
 
 def send_confirmation(email: str, confirmation_url: str) -> None:
-    """Send confirmation email using AWS SES"""
-    ses.send_email(
-        Source=current_app.config["SES_EMAIL_SOURCE"],
-        Destination={"ToAddresses": [email]},
-        Message={
-            "Subject": {"Data": "Confirm Your Account!"},
-            "Body": {
-                "Html": {"Data": render_template("confirmation.html", confirmation_url=confirmation_url)}
-            }
-        }
-    )
+    """Send confirmation email using Gmail Smtp"""
+    msg = Message(
+        subject='Account Confirmation',
+        sender=current_app.config['MAIL_USERNAME'],
+        recipients=[email],
+        html=render_template('confirmation.html', confirmation_url=confirmation_url))
+    mail.send(msg)
