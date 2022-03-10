@@ -5,10 +5,10 @@ from application.resources import auth_ns, projects_ns, issues_ns
 
 api_bp = Blueprint('api', __name__, url_prefix='')
 authorizations = {
-    'Bearer Auth': {
+    'apiKey': {
         'type': 'apiKey',
         'in': 'header',
-        'name': 'Authorization'
+        'name': 'X-CSRF-Token'
     }
 }
 
@@ -17,7 +17,7 @@ api = Api(
     title='Issue Tracker',
     version='1.0',
     description='REST Api for issues tracking',
-    security='Bearer Auth',
+    security='apiKey',
     authorizations=authorizations
 )
 

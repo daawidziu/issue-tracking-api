@@ -1,11 +1,10 @@
 from http import HTTPStatus
-from flask import request, current_app, url_for
+from flask import request, current_app, url_for, make_response
 from flask_restx import Namespace, fields, Resource, abort
-from flask_jwt_extended import create_access_token, get_jwt, jwt_required
+from flask_jwt_extended import create_access_token, get_jwt, jwt_required, set_access_cookies, unset_jwt_cookies
 
 from application.models import Account
-from application.utils import generate_confirmation_token, confirm_token, send_confirmation, \
-    check_if_token_revoked, user_lookup_callback, user_identity_lookup
+from application.utils import generate_confirmation_token, confirm_token, send_confirmation
 
 auth_ns = Namespace('auth', description='Authentication related operations.')
 
@@ -42,7 +41,10 @@ class Register(Resource):
         confirmation_url = url_for("api.auth_confirm", token=confirmation_token, _external=True)
         current_app.q.enqueue(send_confirmation, account.email, confirmation_url)
 
-        return {'access_token': access_token}, 201
+        response = make_response({'message': 'Successfully registered'}, 201)
+        set_access_cookies(response, access_token)
+
+        return response
 
 
 @auth_ns.route('/login')
@@ -63,7 +65,10 @@ class Login(Resource):
 
         access_token = create_access_token(identity=account)
 
-        return {'access_token': access_token}, 200
+        response = make_response({'message': 'Successfully logged in'}, 200)
+        set_access_cookies(response, access_token)
+
+        return response
 
 
 @auth_ns.route('/logout')
@@ -79,7 +84,11 @@ class Logout(Resource):
         """Logout user and block token"""
         jti = get_jwt()['jti']
         current_app.redis.set(jti, "", ex=current_app.config['ACCESS_EXPIRES'])
-        return '', 200
+
+        response = make_response({'message': 'Successfully logged out'}, 200)
+        unset_jwt_cookies(response, jti)
+
+        return response
 
 
 @auth_ns.route('/confirm/<token>')
