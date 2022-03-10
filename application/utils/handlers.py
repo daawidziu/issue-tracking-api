@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
-from flask_jwt_extended import get_jwt, create_access_token, get_jwt_identity, set_access_cookies
+from flask_jwt_extended import JWTManager, get_jwt, create_access_token, current_user, set_access_cookies
 
 from application.models import Account
 
@@ -21,7 +20,7 @@ def register_handlers(app: Flask, db: SQLAlchemy, jwt: JWTManager) -> None:
             now = datetime.utcnow()
             target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
             if target_timestamp > exp_timestamp:
-                access_token = create_access_token(identity=get_jwt_identity())
+                access_token = create_access_token(identity=current_user)
                 set_access_cookies(response, access_token)
             return response
         except (RuntimeError, KeyError):

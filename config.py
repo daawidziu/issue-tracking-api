@@ -19,6 +19,7 @@ class Config:
     MAIL_PORT = 465
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    JWT_COOKIE_DOMAIN = os.getenv('JWT_COOKIE_DOMAIN', None)
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
