@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_mail import Mail
+from flask_cors import CORS
 from redis import Redis
 
 
@@ -15,6 +16,7 @@ jwt = JWTManager()
 bc = Bcrypt()
 migrate = Migrate()
 mail = Mail()
+cors = CORS()
 
 
 def init_app(config_file: object | str = 'config.ProductionConfig') -> Flask:
@@ -30,6 +32,7 @@ def init_app(config_file: object | str = 'config.ProductionConfig') -> Flask:
     bc.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
+    cors.init_app(app)
 
     with app.app_context():
         from application.utils import register_handlers
