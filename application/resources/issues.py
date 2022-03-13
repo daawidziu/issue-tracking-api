@@ -63,7 +63,7 @@ class IssuesPaginate(Resource):
 @issues_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class Issues(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Fetch full list of  issues', [issue])
     def get(self):
         data = Issue.filter_by()
@@ -87,7 +87,7 @@ class Issues(Resource):
 @issues_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class IssuesId(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Get specific issue', issue)
     def get(self, issue_id):
         data = Issue.get(id=issue_id)
@@ -126,7 +126,7 @@ class IssuesId(Resource):
 @issues_ns.route('/<issue_id>/comments')
 class Comments(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Fetch full list of comments', [comment])
     def get(self, issue_id):
         data = Comment.filter_by(issue_id=issue_id)
