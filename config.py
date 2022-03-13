@@ -10,7 +10,7 @@ class Config:
     DEBUG = False
     TESTING = False
     PASSWORD_LOG_ROUNDS = os.getenv("PASSWORD_LOG_ROUNDS", 4)
-    ACCESS_EXPIRES = timedelta(minutes=float(os.getenv("ACCESS_EXPIRES", 1)))
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=float(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 15)))
     EMAIL_MAX_AGE = int(os.getenv("EMAIL_MAX_AGE", 1))
     REDIS_URL = os.getenv("REDIS_URL", "redis://")
     JWT_TOKEN_LOCATION = ['cookies']

@@ -18,7 +18,7 @@ def register_handlers(app: Flask, db: SQLAlchemy, jwt: JWTManager) -> None:
         try:
             exp_timestamp = get_jwt()["exp"]
             now = datetime.utcnow()
-            target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+            target_timestamp = datetime.timestamp(now + (timedelta(app.config['JWT_ACCESS_TOKEN_EXPIRES'] // 2)))
             if target_timestamp > exp_timestamp:
                 access_token = create_access_token(identity=current_user)
                 set_access_cookies(response, access_token)
