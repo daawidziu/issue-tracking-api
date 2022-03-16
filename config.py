@@ -19,7 +19,7 @@ class Config:
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     JWT_COOKIE_DOMAIN = os.getenv('JWT_COOKIE_DOMAIN', None)
-    JWT_COOKIE_SAMESITE = None
+    JWT_COOKIE_SAMESITE = 'None'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
