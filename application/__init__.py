@@ -16,7 +16,7 @@ jwt = JWTManager()
 bc = Bcrypt()
 migrate = Migrate()
 mail = Mail()
-cors = CORS(supports_credentials=True)
+cors = CORS()
 
 
 def init_app(config_file: object | str = 'config.ProductionConfig') -> Flask:

@@ -22,6 +22,9 @@ class Config:
     JWT_COOKIE_SAMESITE = 'None'
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
+    CORS_SUPPORTS_CREDENTIALS = True
+    CORS_ALLOW_HEADERS = ['Authorization']
+
 
 
 class ProductionConfig(Config):
