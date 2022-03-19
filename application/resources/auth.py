@@ -74,7 +74,7 @@ class Login(Resource):
 @auth_ns.route('/logout')
 class Logout(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @auth_ns.response(int(HTTPStatus.OK), 'Logout succeeded, token is no longer valid')
     @auth_ns.response(int(HTTPStatus.UNAUTHORIZED), 'Token is invalid or expired')
     @auth_ns.response(int(HTTPStatus.UNPROCESSABLE_ENTITY), 'Bad Authentication Token')

@@ -42,7 +42,7 @@ comment = issues_ns.model("Comment", {
 @issues_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class IssuesPaginate(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Paginate through issues', issue_pagination)
     def get(self):
         args = request.args
@@ -69,7 +69,7 @@ class Issues(Resource):
         data = Issue.filter_by()
         return IssueSchema(many=True).dump(data)
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.expect(issue, validate=True)
     @issues_ns.response(int(HTTPStatus.CREATED), 'Created issue', issue)
     def post(self):
@@ -97,7 +97,7 @@ class IssuesId(Resource):
 
         return IssueSchema().dump(data)
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Deleted issue')
     def delete(self, issue_id):
         data = Issue.get(id=issue_id)
@@ -109,7 +109,7 @@ class IssuesId(Resource):
 
         return "", 200
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Updated issue', issue)
     def put(self, issue_id):
         data_json = request.get_json()
@@ -132,7 +132,7 @@ class Comments(Resource):
         data = Comment.filter_by(issue_id=issue_id)
         return CommentSchema(many=True).dump(data)
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.expect(comment, validate=True)
     @issues_ns.response(int(HTTPStatus.CREATED), 'Created issue', comment)
     def post(self, issue_id):
@@ -150,7 +150,7 @@ class Comments(Resource):
 @issues_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class CommentsId(Resource):
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Deleted comment')
     def delete(self, issue_id, id):
         data = Comment.get(issue_id=issue_id, id=id)
@@ -162,7 +162,7 @@ class CommentsId(Resource):
 
         return "", 200
 
-    @jwt_required()
+    @jwt_required(optional=True)
     @issues_ns.expect(comment, validate=True)
     @issues_ns.response(int(HTTPStatus.OK), 'Created comment', comment)
     def put(self, issue_id, id):
