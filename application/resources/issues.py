@@ -115,7 +115,7 @@ class IssuesId(Resource):
 
         data.update(data_json)
 
-        return IssueSchema.dump(data), 200
+        return IssueSchema().dump(data), 200
 
 
 @issues_ns.route('/<issue_id>/comments')
