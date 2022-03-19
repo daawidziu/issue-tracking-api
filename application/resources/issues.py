@@ -110,12 +110,12 @@ class IssuesId(Resource):
         data_json = request.get_json()
         data = Issue.get(id=issue_id)
 
-        if not issue:
+        if not data:
             abort(404, 'Issue not found')
 
         data.update(data_json)
 
-        return IssueSchema.dump(issue), 200
+        return IssueSchema.dump(data), 200
 
 
 @issues_ns.route('/<issue_id>/comments')
