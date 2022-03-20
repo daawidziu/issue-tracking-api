@@ -26,6 +26,10 @@ class BaseModel(db.Model):
         return cls.query.filter_by(**filters).limit(limit).all()
 
     @classmethod
+    def count(cls, **filters) -> list['BaseModel']:
+        return cls.query.filter_by(**filters).count()
+
+    @classmethod
     def paginate(cls, page: int, per_page: int = 25, **kwargs) -> Pagination:
         return cls.query.filter_by(**kwargs).paginate(page, per_page)
 
