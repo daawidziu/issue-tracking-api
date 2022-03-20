@@ -126,7 +126,6 @@ class Comments(Resource):
         data = Comment.filter_by(issue_id=issue_id)
         return CommentSchema(many=True).dump(data)
 
-    @jwt_required(optional=True)
     @issues_ns.expect(comment, validate=True)
     @issues_ns.response(int(HTTPStatus.CREATED), 'Created issue', comment)
     def post(self, issue_id):
