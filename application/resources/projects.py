@@ -38,7 +38,7 @@ model_stats = projects_ns.model('ProjectStats', {
 class ProjectsStats(Resource):
 
     @jwt_required(optional=True)
-    @projects_ns.response(int(HTTPStatus.OK), 'Get all Projects with Statistics', fields.List(fields.Nested(model_stats)))
+    @projects_ns.response(int(HTTPStatus.OK), 'Get all Projects with Statistics', [model_stats])
     def get(self):
         projects = Project.filter_by()
         data = []
