@@ -46,7 +46,7 @@ class ProjectsStats(Resource):
             data.append({
                 **ProjectSchema().dump(project),
                 'open_issues': Issue.count(project_id=project.id, status='open'),
-                'closed_issue': Issue.count(project_id=project.id, status='closed'),
+                'closed_issues': Issue.count(project_id=project.id, status='closed'),
                 'wip_issues': Issue.count(project_id=project.id, status='wip'),
             })
         return data
