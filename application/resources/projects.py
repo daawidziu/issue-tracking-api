@@ -38,7 +38,7 @@ model_stats = projects_ns.model('ProjectStats', {
 class ProjectsStats(Resource):
 
     @jwt_required(optional=True)
-    @projects_ns.response(int(HTTPStatus.OK), 'Get all Projects with Statistics', fields.List(fields.Nested(model)))
+    @projects_ns.response(int(HTTPStatus.OK), 'Get all Projects with Statistics', fields.List(fields.Nested(model_stats)))
     def get(self):
         projects = Project.filter_by()
         data = []
@@ -50,6 +50,7 @@ class ProjectsStats(Resource):
                 'wip_issues': Issue.count(project_id=project.id, status='wip'),
             })
         return data
+
 
 @projects_ns.route('/')
 @projects_ns.response(int(HTTPStatus.BAD_REQUEST), 'Validation Error')
