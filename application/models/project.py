@@ -9,5 +9,6 @@ class Project(BaseModel):
     # Project Information
     name = db.Column(db.String(256))
     description = db.Column(db.Text)
+    url = db.Column(db.String(256))
     # Relationships
     issues = relationship("Issue", back_populates="project")
