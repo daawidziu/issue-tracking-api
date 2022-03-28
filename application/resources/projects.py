@@ -37,7 +37,6 @@ model_stats = projects_ns.model('ProjectStats', {
 @projects_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class ProjectsStats(Resource):
 
-    @jwt_required(optional=True)
     @projects_ns.response(int(HTTPStatus.OK), 'Get all Projects with Statistics', [model_stats])
     def get(self):
         projects = Project.filter_by()
@@ -63,7 +62,7 @@ class Projects(Resource):
         projects = Project.filter_by()
         return schema_list.dump(projects)
 
-    @jwt_required(optional=True)
+    @jwt_required()
     @projects_ns.expect(model, validate=True)
     @projects_ns.response(int(HTTPStatus.CREATED), 'Created project', model)
     def post(self):
@@ -80,7 +79,6 @@ class Projects(Resource):
 @projects_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), 'Internal server error')
 class ProjectsId(Resource):
 
-    @jwt_required(optional=True)
     @projects_ns.response(int(HTTPStatus.OK), 'Get specific project', [model])
     def get(self, id):
         project = Project.get(id=id)
@@ -90,7 +88,7 @@ class ProjectsId(Resource):
 
         return schema.dump(project)
 
-    @jwt_required(optional=True)
+    @jwt_required()
     def delete(self, id):
         project = Project.get(id=id)
 
@@ -101,7 +99,7 @@ class ProjectsId(Resource):
 
         return "", 200
 
-    @jwt_required(optional=True)
+    @jwt_required()
     @projects_ns.expect(model, validate=True)
     def put(self, id):
         data = request.get_json()
