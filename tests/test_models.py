@@ -23,6 +23,6 @@ def test_base(app):
     assert Project.get(name=name).name == project.name
     assert Project.filter_by()
     assert Project.paginate(page=1).items == [project]
-    project.update({'description': 'NewName'})
-    assert project.description == 'NewName'
+    project.update({'description': 'new'})
+    assert project.description == 'new'
     project.delete()
